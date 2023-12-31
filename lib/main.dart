@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// All pages
+import 'homePage.dart' as home_page;
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,6 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(
+            fontSize: 50,
+            fontFamily: "Montserrat",
+            fontWeight: FontWeight.bold,
+          )
+        )
       ),
       home: const MyHomePage(title: 'Ors Photos'),
     );
@@ -30,13 +40,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   int selectedIndex = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,20 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
+      body: [
+        const home_page.HomePage()
+      ][selectedIndex],
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.orange.shade50,
         onDestinationSelected: (int index) {
