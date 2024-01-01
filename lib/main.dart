@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
         textTheme: const TextTheme(
           titleMedium: TextStyle(
             fontSize: 50,
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w900
+            fontWeight: FontWeight.bold
           )
         )
       ),

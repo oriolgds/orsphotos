@@ -46,7 +46,23 @@ class HomeCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start,)
+                  Text(title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start,),
+                  Expanded(child: Container()),
+                  FilledButton(
+                    onPressed: (){
+
+                    },
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Ver'),
+                        SizedBox(
+                          width: 6,
+                        ),
+                        Icon(Icons.arrow_right_alt_rounded)
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
