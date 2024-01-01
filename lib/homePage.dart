@@ -17,7 +17,8 @@ class HomeCard extends StatelessWidget {
   final String title;
 
   final String image;
-  const HomeCard(this.title, this.image, {super.key});
+
+  const HomeCard(this.title, this.image,{super.key});
 
   @override
   Widget build(BuildContext context) {
