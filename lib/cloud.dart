@@ -5,6 +5,6 @@ class CloudPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('In the cloud');
+    return const Center(child: Text('In the cloud!'));
   }
 }

@@ -1,11 +1,23 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart' as main;
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.changeIndex});
   final Function changeIndex;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -13,7 +25,7 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          HomeCard("Tus Fotos", 'img/home/cards/agila.jpg', changeIndex, 1), HomeCard("Fotos en la Nube", "img/home/cards/pajaros.jpg", changeIndex, 2)
+          HomeCard("Tus Fotos", widget.changeIndex, 1), HomeCard("Fotos en la Nube", widget.changeIndex, 2)
         ],
       ),
     );
@@ -22,19 +34,39 @@ class HomePage extends StatelessWidget {
 class HomeCard extends StatefulWidget {
   final String title;
 
-  final String image;
 
   final Function changeIndex;
 
   final int changeIndexValue;
 
-  const HomeCard(this.title, this.image, this.changeIndex, this.changeIndexValue, {super.key});
+  const HomeCard(this.title, this.changeIndex, this.changeIndexValue, {super.key});
 
   @override
   State<HomeCard> createState() => _HomeCardState();
 }
 
 class _HomeCardState extends State<HomeCard> {
+  String image1 = "http://via.placeholder.com/350x150";
+  String image2 = "http://via.placeholder.com/350x150";
+  void fetchImages() async {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.fetchAndActivate();
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: const Duration(seconds: 10),
+    ));
+
+    setState(() {
+      image1 = remoteConfig.getString('homeCard1').toString();
+      image2 = remoteConfig.getString('homeCard2').toString();
+    });
+    debugPrint("Image 1: $image1");
+  }
+  @override
+  void initState() {
+    fetchImages();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -48,7 +80,7 @@ class _HomeCardState extends State<HomeCard> {
             borderRadius: BorderRadius.circular(30),
             image: DecorationImage(
               opacity: 0.4,
-              image: AssetImage(widget.image),
+              image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ors-photos.appspot.com/o/agila.jpg?alt=media&token=8a05e4da-8788-430b-b83b-a20fce5a165e"),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),

@@ -1,10 +1,30 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+
+// Firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 // All pages
 import 'homePage.dart' as home_page;
 import 'gallery.dart' as galery_page;
 import 'cloud.dart' as cloud_page;
-void main() {
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
+  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+
+
+
   runApp(const MyApp());
 }
 
@@ -47,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedIndex = value;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
