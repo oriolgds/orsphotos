@@ -50,9 +50,7 @@ class HomeCard extends StatelessWidget {
                   Text(title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start,),
                   Expanded(child: Container()),
                   FilledButton(
-                    onPressed: (){
-
-                    },
+                    onPressed: () => throw Exception(),
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
