@@ -4,15 +4,15 @@ import 'main.dart' as main;
 
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+  const HomePage({super.key, required this.changeIndex});
+  final Function changeIndex;
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        HomeCard("Tus Fotos", 'img/home/cards/agila.jpg', 1), HomeCard("Fotos en la Nube", "img/home/cards/pajaros.jpg", 2)
+        HomeCard("Tus Fotos", 'img/home/cards/agila.jpg', changeIndex, 1), HomeCard("Fotos en la Nube", "img/home/cards/pajaros.jpg", changeIndex, 2)
       ],
     );
   }
@@ -22,9 +22,11 @@ class HomeCard extends StatefulWidget {
 
   final String image;
 
-  final int index;
+  final Function changeIndex;
 
-  const HomeCard(this.title, this.image, this.index, {super.key});
+  final int changeIndexValue;
+
+  const HomeCard(this.title, this.image, this.changeIndex, this.changeIndexValue, {super.key});
 
   @override
   State<HomeCard> createState() => _HomeCardState();
@@ -62,7 +64,7 @@ class _HomeCardState extends State<HomeCard> {
                   Expanded(child: Container()),
                   FilledButton(
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> main.MyHomePage(title: 'Ors Photos', indexTab: widget.index))) ;
+                      widget.changeIndex(widget.changeIndexValue);
                     },
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,

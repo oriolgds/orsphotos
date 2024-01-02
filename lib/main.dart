@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // All pages
 import 'homePage.dart' as home_page;
 import 'galery.dart' as galery_page;
+import 'cloud.dart' as cloud_page;
 void main() {
   runApp(const MyApp());
 }
@@ -24,14 +25,13 @@ class MyApp extends StatelessWidget {
           )
         )
       ),
-      home: const MyHomePage(title: 'Ors Photos', indexTab: 0,),
+      home: const MyHomePage(title: 'Ors Photos'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title, required this.indexTab});
-  final int indexTab;
+  const MyHomePage({super.key, required this.title});
   final String title;
 
   @override
@@ -41,13 +41,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
-  @override
-  void initState() {
-    setState(() {
-      selectedIndex = widget.indexTab;
-    });
-    super.initState();
-  }
   void changeSelectedIndex(value){
     setState(() {
       selectedIndex = value;
@@ -63,8 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: [
-        const home_page.HomePage(),
-        const galery_page.GaleryPage()
+        home_page.HomePage(changeIndex: changeSelectedIndex,),
+        const galery_page.GaleryPage(),
+        const cloud_page.CloudPage()
       ][selectedIndex],
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.orange.shade50,
