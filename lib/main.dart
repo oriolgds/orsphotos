@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ors Photos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
@@ -24,23 +24,35 @@ class MyApp extends StatelessWidget {
           )
         )
       ),
-      home: const MyHomePage(title: 'Ors Photos'),
+      home: const MyHomePage(title: 'Ors Photos', indexTab: 0,),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
+  const MyHomePage({super.key, required this.title, required this.indexTab});
+  final int indexTab;
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-int selectedIndex = 0;
+
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  int selectedIndex = 0;
+  @override
+  void initState() {
+    setState(() {
+      selectedIndex = widget.indexTab;
+    });
+    super.initState();
+  }
+  void changeSelectedIndex(value){
+    setState(() {
+      selectedIndex = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.orange.shade50,
         onDestinationSelected: (int index) {
-          setState(() {
-            selectedIndex = index;
-          });
+          changeSelectedIndex(index);
         },
         indicatorColor: Colors.greenAccent,
         selectedIndex: selectedIndex,

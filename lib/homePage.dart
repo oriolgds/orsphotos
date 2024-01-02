@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        HomeCard("Tus Fotos", 'img/home/cards/agila.jpg'), HomeCard("Fotos en la Nube", "img/home/cards/pajaros.jpg")
+        HomeCard("Tus Fotos", 'img/home/cards/agila.jpg', 1), HomeCard("Fotos en la Nube", "img/home/cards/pajaros.jpg", 2)
       ],
     );
   }
@@ -22,7 +22,9 @@ class HomeCard extends StatefulWidget {
 
   final String image;
 
-  const HomeCard(this.title, this.image,{super.key});
+  final int index;
+
+  const HomeCard(this.title, this.image, this.index, {super.key});
 
   @override
   State<HomeCard> createState() => _HomeCardState();
@@ -60,9 +62,7 @@ class _HomeCardState extends State<HomeCard> {
                   Expanded(child: Container()),
                   FilledButton(
                     onPressed: (){
-                      setState(() {
-                        main.selectedIndex = 1;
-                      });
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> main.MyHomePage(title: 'Ors Photos', indexTab: widget.index))) ;
                     },
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
