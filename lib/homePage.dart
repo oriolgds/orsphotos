@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'main.dart' as main;
+
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -13,13 +17,18 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-class HomeCard extends StatelessWidget {
+class HomeCard extends StatefulWidget {
   final String title;
 
   final String image;
 
   const HomeCard(this.title, this.image,{super.key});
 
+  @override
+  State<HomeCard> createState() => _HomeCardState();
+}
+
+class _HomeCardState extends State<HomeCard> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -33,7 +42,7 @@ class HomeCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             image: DecorationImage(
               opacity: 0.4,
-              image: AssetImage(image),
+              image: AssetImage(widget.image),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),
@@ -47,11 +56,13 @@ class HomeCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start,),
+                  Text(widget.title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start,),
                   Expanded(child: Container()),
                   FilledButton(
                     onPressed: (){
-
+                      setState(() {
+                        main.selectedIndex = 1;
+                      });
                     },
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,

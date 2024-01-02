@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // All pages
 import 'homePage.dart' as home_page;
-
+import 'galery.dart' as galery_page;
 void main() {
   runApp(const MyApp());
 }
@@ -37,9 +37,10 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+int selectedIndex = 0;
 
 class _MyHomePageState extends State<MyHomePage> {
-  int selectedIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: [
-        const home_page.HomePage()
+        const home_page.HomePage(),
+        const galery_page.GaleryPage()
       ][selectedIndex],
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.orange.shade50,
