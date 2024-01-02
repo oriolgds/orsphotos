@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // All pages
 import 'homePage.dart' as home_page;
-import 'galery.dart' as galery_page;
+import 'gallery.dart' as galery_page;
 import 'cloud.dart' as cloud_page;
 void main() {
   runApp(const MyApp());
@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Ors Photos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: [
         home_page.HomePage(changeIndex: changeSelectedIndex,),
-        const galery_page.GaleryPage(),
+        const galery_page.GalleryPage(),
         const cloud_page.CloudPage()
       ][selectedIndex],
       bottomNavigationBar: NavigationBar(

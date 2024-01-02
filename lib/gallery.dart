@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 
 
-class GaleryPage extends StatelessWidget {
-  const GaleryPage({super.key});
+class GalleryPage extends StatelessWidget {
+  const GalleryPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -8,12 +8,14 @@ class HomePage extends StatelessWidget {
   final Function changeIndex;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        HomeCard("Tus Fotos", 'img/home/cards/agila.jpg', changeIndex, 1), HomeCard("Fotos en la Nube", "img/home/cards/pajaros.jpg", changeIndex, 2)
-      ],
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          HomeCard("Tus Fotos", 'img/home/cards/agila.jpg', changeIndex, 1), HomeCard("Fotos en la Nube", "img/home/cards/pajaros.jpg", changeIndex, 2)
+        ],
+      ),
     );
   }
 }
