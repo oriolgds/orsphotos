@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
@@ -45,9 +47,26 @@ class HomeCard extends StatefulWidget {
   State<HomeCard> createState() => _HomeCardState();
 }
 
-class _HomeCardState extends State<HomeCard> {
-  String image1 = "http://via.placeholder.com/350x150";
-  String image2 = "http://via.placeholder.com/350x150";
+class _HomeCardState extends State<HomeCard> with SingleTickerProviderStateMixin {
+  List<String?> images = [null, null];
+  late Animation<double> animation;
+  late AnimationController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(duration: const Duration(milliseconds: 700), vsync: this);
+
+    animation = Tween<double>(begin: 0, end: 0.4).animate(
+      CurvedAnimation(parent: controller, curve: Curves.easeInOut)
+    )
+      ..addListener(() {
+        setState(() {
+          // The state that has changed here is the animation object's value.
+        });
+      });
+    fetchImages();
+
+  }
   void fetchImages() async {
     final remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.fetchAndActivate();
@@ -57,15 +76,10 @@ class _HomeCardState extends State<HomeCard> {
     ));
 
     setState(() {
-      image1 = remoteConfig.getString('homeCard1').toString();
-      image2 = remoteConfig.getString('homeCard2').toString();
+      images[0] = remoteConfig.getString('homeCard1').toString();
+      images[1] = remoteConfig.getString('homeCard2').toString();
     });
-    debugPrint("Image 1: $image1");
-  }
-  @override
-  void initState() {
-    fetchImages();
-    super.initState();
+    controller.forward();
   }
   @override
   Widget build(BuildContext context) {
@@ -79,8 +93,8 @@ class _HomeCardState extends State<HomeCard> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             image: DecorationImage(
-              opacity: 0.4,
-              image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ors-photos.appspot.com/o/agila.jpg?alt=media&token=8a05e4da-8788-430b-b83b-a20fce5a165e"),
+              opacity: animation.value,
+              image: CachedNetworkImageProvider(images[widget.changeIndexValue - 1] ?? "https://raw.githubusercontent.com/oriolgds/Ors-Photos/main/placeholder.jpg"),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),
