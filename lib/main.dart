@@ -1,26 +1,27 @@
-// Firebase code
-import 'dart:ui';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-
-
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+
+// Firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 // All pages
 import 'homePage.dart' as home_page;
+import 'gallery.dart' as galery_page;
+import 'cloud.dart' as cloud_page;
+void main() async {
 
-Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
+  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
 
 
 
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Ors Photos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
@@ -51,15 +53,21 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+
 class _MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
+  void changeSelectedIndex(value){
+    setState(() {
+      selectedIndex = value;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: [
-        const home_page.HomePage()
+        home_page.HomePage(changeIndex: changeSelectedIndex,),
+        const galery_page.GalleryPage(),
+        const cloud_page.CloudPage()
       ][selectedIndex],
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.orange.shade50,
         onDestinationSelected: (int index) {
-          setState(() {
-            selectedIndex = index;
-          });
+          changeSelectedIndex(index);
         },
         indicatorColor: Colors.greenAccent,
         selectedIndex: selectedIndex,

@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBrgHB2NyC_8IT-ax6bzC1mvnRo1TthKpg',
-    appId: '1:125427961019:android:fd9a1990fbbd5394cced9e',
+    appId: '1:125427961019:android:0a0d3e23bebeaab9cced9e',
     messagingSenderId: '125427961019',
     projectId: 'ors-photos',
     storageBucket: 'ors-photos.appspot.com',

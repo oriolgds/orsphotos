@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:125427961019:android:fd9a1990fbbd5394cced9e",
+        "mobilesdk_app_id": "1:125427961019:android:0a0d3e23bebeaab9cced9e",
         "android_client_info": {
-          "package_name": "com.ors.orsphotos"
+          "package_name": "com.example.orsphotos"
         }
       },
       "oauth_client": [],
