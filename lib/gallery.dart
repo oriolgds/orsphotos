@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 
 
 class GalleryPage extends StatelessWidget {
@@ -9,3 +12,4 @@ class GalleryPage extends StatelessWidget {
     return const Placeholder();
   }
 }
+
