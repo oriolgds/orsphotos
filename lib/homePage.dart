@@ -61,6 +61,7 @@ class _HomeCardState extends State<HomeCard> with SingleTickerProviderStateMixin
     )
       ..addListener(() {
         setState(() {
+          return;
           // The state that has changed here is the animation object's value.
         });
       });
@@ -84,48 +85,63 @@ class _HomeCardState extends State<HomeCard> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30)
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(.2),
+              blurRadius: 100.0, // soften the shadow
+              spreadRadius: 0.0, //extend the shadow
+              offset: const Offset(
+                0.0, // Move to right 10  horizontally
+                5.0, // Move to bottom 10 Vertically
+              ),
+            )
+          ]
         ),
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
-              opacity: animation.value,
-              image: CachedNetworkImageProvider(images[widget.changeIndexValue - 1] ?? "https://raw.githubusercontent.com/oriolgds/Ors-Photos/main/placeholder.jpg"),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
-
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30)
           ),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(widget.title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start,),
-                  Expanded(child: Container()),
-                  FilledButton(
-                    onPressed: (){
-                      widget.changeIndex(widget.changeIndexValue);
-                    },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('Ver'),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Icon(Icons.arrow_right_alt_rounded)
-                      ],
-                    ),
-                  )
-                ],
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              image: DecorationImage(
+                opacity: animation.value,
+                image: CachedNetworkImageProvider(images[widget.changeIndexValue - 1] ?? "https://raw.githubusercontent.com/oriolgds/Ors-Photos/main/placeholder.jpg"),
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
+
+            ),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.title, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.start,),
+                    Expanded(child: Container()),
+                    FilledButton(
+                      onPressed: (){
+                        widget.changeIndex(widget.changeIndexValue);
+                      },
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Ver'),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Icon(Icons.arrow_right_alt_rounded)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
