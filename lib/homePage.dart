@@ -70,10 +70,10 @@ class _HomeCardState extends State<HomeCard> with SingleTickerProviderStateMixin
   }
   void fetchImages() async {
     final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.fetchAndActivate();
+    await remoteConfig.activate();
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(minutes: 5),
     ));
 
     setState(() {
