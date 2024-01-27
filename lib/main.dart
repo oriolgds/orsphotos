@@ -1,4 +1,3 @@
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 // Firebase
@@ -7,7 +6,7 @@ import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 // All pages
-import 'homePage.dart' as home_page;
+import 'home_page.dart' as home_page;
 import 'gallery.dart' as galery_page;
 import 'cloud.dart' as cloud_page;
 void main() async {
