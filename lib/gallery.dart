@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -12,17 +13,20 @@ class GalleryPage extends StatefulWidget {
 }
 
 class _GalleryPageState extends State<GalleryPage> {
-  directory() async {
-    final dir = Directory('/sdcard/DCIM/Camera/');
-    final List<FileSystemEntity> entities = await dir.list().toList();
-    debugPrint("All files: -------------------------------------------");
-    for (var element in entities) {
-      debugPrint(element.toString());
-    }
+  Future<List<FileSystemEntity>> dirContents(Directory dir) {
+    var files = <FileSystemEntity>[];
+    var completer = Completer<List<FileSystemEntity>>();
+    var lister = dir.list(recursive: false);
+    lister.listen (
+            (file) => files.add(file),
+        // should also register onError
+        onDone:   () => completer.complete(files)
+    );
+    return completer.future;
   }
   @override
   void initState() {
-    directory();
+    dirContents(Directory('/sdcard/DCIM/Camera/'));
     super.initState();
   }
   @override
