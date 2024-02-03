@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class GalleryPage extends StatefulWidget {
@@ -52,13 +53,26 @@ class _GalleryPageState extends State<GalleryPage> {
       setState(() {
         selectedDir = selectedDirectory;
       });
+      final prefs = await SharedPreferences.getInstance();
       debugPrint("Selected directory: $selectedDirectory");
+      debugPrint("Saving in preferences...");
+      await prefs.setString('photoDir', selectedDirectory.toString());
     }
   }
   @override
   void initState() {
     super.initState();
+    checkPreferences();
+  }
+  checkPreferences() async {
 
+    final prefs = await SharedPreferences.getInstance();
+    debugPrint("PhotoDir: ${prefs.getString('photoDir')}");
+    if(prefs.getString('photoDir') != null){
+      setState(() {
+        selectedDir = prefs.getString('photoDir')!;
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {
