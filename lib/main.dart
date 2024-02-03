@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+// Image picker
+
+
 // Firebase
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 // All pages
 import 'home_page.dart' as home_page;
@@ -16,11 +18,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-
-  // Pass all uncaught "fatal" errors from the framework to Crashlytics
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-
 
 
 
@@ -42,7 +39,7 @@ class MyApp extends StatelessWidget {
           titleMedium: TextStyle(
             fontSize: 50,
             fontWeight: FontWeight.bold
-          )
+          ),
         )
       ),
       home: const MyHomePage(title: 'Ors Photos'),

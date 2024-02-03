@@ -1,8 +1,7 @@
-import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-
+import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class GalleryPage extends StatefulWidget {
@@ -12,25 +11,73 @@ class GalleryPage extends StatefulWidget {
   State<GalleryPage> createState() => _GalleryPageState();
 }
 
-class _GalleryPageState extends State<GalleryPage> {
-  Future<List<FileSystemEntity>> dirContents(Directory dir) {
-    var files = <FileSystemEntity>[];
-    var completer = Completer<List<FileSystemEntity>>();
-    var lister = dir.list(recursive: false);
-    lister.listen (
-            (file) => files.add(file),
-        // should also register onError
-        onDone:   () => completer.complete(files)
+
+class Paso extends StatelessWidget {
+  const Paso(this.icon, this.text, this.separation, {super.key});
+  final IconData icon;
+  final String text;
+  final double separation;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: separation,),
+        Icon(icon, size: 40,),
+        Text(text, style: const TextStyle(fontSize: 18.0, fontFamily: "Montserrat", color: Colors.black, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+
+      ],
     );
-    return completer.future;
+  }
+}
+
+class _GalleryPageState extends State<GalleryPage> {
+  String selectedDir = "null";
+  pickDir() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.storage,
+      Permission.videos,
+      Permission.photos,
+      Permission.audio,
+      Permission.manageExternalStorage,
+    ].request();
+    debugPrint(statuses[Permission.location].toString());
+
+    String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+
+    if (selectedDirectory == null) {
+      debugPrint("User cancelled the picker!");
+    }
+    else {
+      setState(() {
+        selectedDir = selectedDirectory;
+      });
+      debugPrint("Selected directory: $selectedDirectory");
+    }
   }
   @override
   void initState() {
-    dirContents(Directory('/sdcard/DCIM/Camera/'));
     super.initState();
+
   }
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Paso(Icons.looks_one_rounded, 'Acepta los permisos de almacenamiento', 0),
+            const Paso(Icons.looks_two_rounded, 'Escoge la carpeta donde tienes almacenadas tus fotos', 24),
+            const SizedBox(height: 18,),
+            FilledButton(onPressed: pickDir, child: const Text('¡Claro!')),
+            Text('Directorio seleccionado: $selectedDir')
+          ],
+        ),
+      ),
+    );
   }
 }
